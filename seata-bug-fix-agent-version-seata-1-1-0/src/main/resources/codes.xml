@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<codes>
+    <zookeeperConfigurationHandler>
+        <setZkSerializer><![CDATA[
+            if(zkClient != null){
+                zkClient.setZkSerializer(new io.seata.config.zk.ZkSerializer());
+            }
+        ]]>
+        </setZkSerializer>
+        <zkSerializer>
+            <serialize>
+                <![CDATA[
+                    public byte[] serialize(Object obj) throws org.I0Itec.zkclient.exception.ZkMarshallingError {
+                        return String.valueOf(obj).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                    }
+                ]]>
+            </serialize>
+        </zkSerializer>
+        <zkSerializer>
+            <deserialize>
+                <![CDATA[
+                    public Object deserialize(byte[] bytes) throws org.I0Itec.zkclient.exception.ZkMarshallingError {
+                        return new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+                    }
+                ]]>
+            </deserialize>
+        </zkSerializer>
+    </zookeeperConfigurationHandler>
+</codes>
